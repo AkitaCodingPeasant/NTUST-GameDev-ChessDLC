@@ -1,0 +1,10 @@
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\bin\Debug\ChessDLC.exe.config
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\bin\Debug\ChessDLC.exe
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\bin\Debug\ChessDLC.pdb
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.csproj.AssemblyReference.cache
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.Properties.Resources.resources
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.csproj.GenerateResource.cache
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.csproj.CoreCompileInputs.cache
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.exe
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.pdb
+D:\大學\11301\C sharp\期末\ChessDLC\ChessDLC\obj\Debug\ChessDLC.ChessDlcForm.resources
