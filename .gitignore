@@ -1,0 +1,69 @@
+# 編譯產生的檔案
+*.exe
+*.out
+*.o
+*.obj
+*.dll
+*.pdb
+*.so
+*.dylib
+
+# Visual Studio 設定
+.vs/
+[Bb]in/
+[Oo]bj/
+*.csproj.user
+*.suo
+*.userprefs
+
+# CMake
+build/
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+
+# 暫存與快取檔案
+*.log
+*.tmp
+*.swp
+*.bak
+.cache/
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Node.js / npm / Yarn
+node_modules/
+.npm/
+.yarn/
+.yarn-cache/
+
+# 環境設定檔
+.env
+*.env.local
+*.env.test
+*.env.production
+
+# IDE 與編輯器的設定檔案
+.idea/
+*.iml
+*.vscode/
+
+# Unity-specific
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+Build/
+Builds/
+*.unitypackage
+
+# 特定檔案
+*.DS_Store  # macOS 系統檔案
+Thumbs.db   # Windows 系統檔案
+.DS_Store
+
+# 自定義排除目錄（如果有其他快取或暫存目錄）
+my_temp_folder/
+custom_cache/
