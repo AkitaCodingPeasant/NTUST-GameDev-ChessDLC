@@ -31,42 +31,57 @@ namespace ChessDLC {
     }
 
     public class RulerNormalAttack : Skill {
-        public RulerNormalAttack(Piece skillCaster) : base(skillCaster, 4) {
-            name = "";
+        public RulerNormalAttack(Piece skillCaster) : base(skillCaster, 1) {
+            name = "看破";
             skillType = SkillType.Active;
-            cooldown = 0;
+            cooldown = 1;
             positionsNeeded = 1;
+            describe = $"對距離 1 格內敵方單體賦予破綻 {damage} 回合";
         }
         public override void FindValidPosition() {
+            ManhattanPathFinder(1, TargetType.Enemy, false);
         }
         public override void Execute() {
+            ChessBoard.GetRect(targetPositions[0]).piece.statusEffect.AddStatusEffect(EffectType.Exposed, damage);
         }
     }
     public class RulerSkill : Skill {
-        public RulerSkill(Piece skillCaster) : base(skillCaster, 4) {
-            name = "";
+        public RulerSkill(Piece skillCaster) : base(skillCaster, 99) {
+            name = "冊命";
             skillType = SkillType.Active;
-            cooldown = 0;
-            positionsNeeded = 10;
+            cooldown = 10;
+            positionsNeeded = 1;
+            describe = $"賦予距離 1 格內友方單體無敵 2 回合\n並回復 {damage} 生命值";
         }
         public override void FindValidPosition() {
         }
         public override void Execute() {
-            skillCaster.Attack(ChessBoard.GetRect(targetPositions[0]).piece, damage);
+            ChessBoard.GetRect(targetPositions[0]).piece.statusEffect.AddStatusEffect(EffectType.Invincibility, 2);
+            ChessBoard.GetRect(targetPositions[0]).piece.Heal(damage);
         }
     }
 
     public class RulerPassive : Skill {
         public RulerPassive(Piece skillCaster) : base(skillCaster, 1) {
-            name = "";
-            skillType = SkillType.Passive;
-            cooldown = 0;
+            name = "激昂";
+            skillType = SkillType.Active;
+            cooldown = 1;
             positionsNeeded = 0;
+            describe = $"賦予八方位1格內友方全體疾行 {damage} 回合";
         }
         public override void FindValidPosition() {
         }
         public override void Execute() {
-            if (!skillCaster.statusEffect.HasStatusEffect(EffectType.Silence) && !skillCaster.statusEffect.HasStatusEffect(EffectType.Stun)) { return; }
+            if (skillCaster.statusEffect.HasStatusEffect(EffectType.Silence) || skillCaster.statusEffect.HasStatusEffect(EffectType.Stun)) { return; }
+            int[] dx = new int[8] { -1, 0, 1, -1, 1, -1, 0, 1 };
+            int[] dy = new int[8] { -1, -1, -1, 0, 0, 1, 1, 1 };
+            for (int i = 0; i < dx.Length; i++) {
+                Rect rectToDetect = ChessBoard.GetRect(skillCaster.position.x + dx[i], skillCaster.position.y + dy[i]);
+                if (rectToDetect.piece != null && skillCaster.faction == rectToDetect.piece.faction) {
+                    rectToDetect.piece.statusEffect.AddStatusEffect(EffectType.QuickStep, damage);
+                }
+            }
+            skillCaster.statusEffect.AddStatusEffect(EffectType.QuickStep, damage);
         }
     }
 
