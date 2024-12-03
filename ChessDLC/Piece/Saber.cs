@@ -40,7 +40,7 @@ namespace ChessDLC {
 
     public class SaberSkill : Skill {
         (int x, int y) lastPos;
-        public SaberSkill(Piece skillCaster) : base(skillCaster, 10) {
+        public SaberSkill(Piece skillCaster) : base(skillCaster, 6) {
             name = "行雲";
             skillType = SkillType.Active;
             cooldown = 4;
@@ -48,7 +48,8 @@ namespace ChessDLC {
             describe = $"最多鎖定 6 個目標地塊 \n" +
                 $"將敵方後方 1 格作為下一個跳躍位置\n" +
                 $"每次突進對路徑中間的敵方單體造成 {damage} 點傷害\n" +
-                $"連續選取同一地塊 立即完成快速施放";
+                $"連續選取同一地塊 立即完成快速施放" +
+                $"\n傷害加成：LV.1 150% || LV.2 200%";
         }
         public override void FindValidPosition() {
             // 雙擊確認重複施放
@@ -110,7 +111,8 @@ namespace ChessDLC {
             for (int i = 0; i < targetPositions.Count; i++) {
                 ChessBoard.PieceMove(skillCaster, targetPositions[i]);
                 if (i < targetPieces.Count) {
-                    skillCaster.Attack(targetPieces[i], damage);
+                    int totalDamage = damage + (damage * skillCaster.level / 2);
+                    skillCaster.Attack(targetPieces[i], totalDamage);
                 }
             }
         }

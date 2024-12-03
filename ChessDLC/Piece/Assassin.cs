@@ -46,12 +46,16 @@ namespace ChessDLC {
     }
 
     public class AssassinSkill : Skill {
-        public AssassinSkill(Piece skillCaster) : base(skillCaster, 3) {
+        public AssassinSkill(Piece skillCaster) : base(skillCaster, 2) {
             name = "奪命";
             skillType = SkillType.Active;
             cooldown = 5;
             positionsNeeded = 2;
-            describe = $"將距離 3 格內的敵方單體設為目標\n對目標造成 {damage} 傷害\n再往敵方四方位 1 格移動\n若目標生命低於 {damage * 2} 造成雙倍傷害";
+            describe = $"將距離 3 格內的敵方單體設為目標\n" +
+                $"對目標造成 {damage} 傷害\n" +
+                $"再往敵方四方位 1 格移動\n" +
+                $"若目標生命低於 {damage * 2} 造成雙倍傷害" +
+                $"\n傷害加成：LV.1 150 % || LV.2 200 % ";
         }
         public override void FindValidPosition() {
             if (targetPositions.Count == 0) {
@@ -63,11 +67,14 @@ namespace ChessDLC {
         }
         public override void Execute() {
             Piece enemyPiece = ChessBoard.GetRect(targetPositions[0]).piece;
-            if (enemyPiece.health <= damage * 2) {
-                skillCaster.Attack(enemyPiece, damage * 2);
+
+            int totalDamage = damage + (damage * skillCaster.level / 2);
+
+            if (enemyPiece.health <= totalDamage * 2) {
+                skillCaster.Attack(enemyPiece, totalDamage * 2);
             }
             else {
-                skillCaster.Attack(enemyPiece, damage);
+                skillCaster.Attack(enemyPiece, totalDamage);
             }
             ChessBoard.PieceMove(skillCaster, targetPositions[1]);
         }

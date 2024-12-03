@@ -54,7 +54,7 @@ namespace ChessDLC {
     }
 
     public class RiderSkill : Skill {
-        public RiderSkill(Piece skillCaster) : base(skillCaster, 8) {
+        public RiderSkill(Piece skillCaster) : base(skillCaster, 6) {
             name = "衝鋒";
             skillType = SkillType.Active;
             cooldown = 4;
@@ -62,7 +62,9 @@ namespace ChessDLC {
             describe = $"將八方位 2~3 格的敵方單體設為目標\n" +
                 $"往目標方向移動至目標前 1 格\n" +
                 $"對目標單位造成 {damage} 傷害\n" +
-                $"並對目標後方單位造成 {(damage + 1) / 2} 傷害";
+                $"並對目標後方單位造成 {(damage + 1) / 2} 傷害" +
+                $"但對自身賦予束縛 1 回合"+
+                $"\n傷害加成：LV.1 150% || LV.2 200%";
         }
         public override void FindValidPosition() {
             int targetDistance = 3;
@@ -94,8 +96,13 @@ namespace ChessDLC {
             ChessBoard.PieceMove(skillCaster, targetPositions[0].x - unitDirX, targetPositions[0].y - unitDirY);
             Piece enemyPiece1 = ChessBoard.GetRect(targetPositions[0].x, targetPositions[0].y).piece;
             Piece enemyPiece2 = ChessBoard.GetRect(targetPositions[0].x + unitDirX, targetPositions[0].y + unitDirY).piece;
-            skillCaster.Attack(enemyPiece1, damage);
-            skillCaster.Attack(enemyPiece2, (damage + 1) / 2);
+
+            int totalDamage = damage + (damage * skillCaster.level / 2);
+
+            skillCaster.Attack(enemyPiece1, totalDamage);
+            skillCaster.Attack(enemyPiece2, (totalDamage + 1) / 2);
+
+            skillCaster.statusEffect.AddStatusEffect(EffectType.Bind, 1);
         }
     }
 
@@ -166,7 +173,7 @@ namespace ChessDLC {
 
     public class Rider : Piece {
         public override void GetKill(Piece target) {
-            skillTable[2].Execute();
+            skillTable[3].Execute();
         }
         public Rider(Faction faction, int level) : base(faction, Role.Rider, level, "🐴") {
             nameOfDiffLv = new string[3] { "騎兵", "先鋒", "金甲驕雄" };
@@ -179,12 +186,12 @@ namespace ChessDLC {
             health = maxHpDiffLv[level];
             maxHealth = maxHpDiffLv[level];
 
-            meritNeeded.Add(10);
+            meritNeeded.Add(15);
             meritNeeded.Add(25);
             skillTable.Add(new RiderMovement(this));
             skillTable.Add(new RiderNormalAttack(this));
-            skillTable.Add(new RiderPassive(this));
             skillTable.Add(new RiderSkill(this));
+            skillTable.Add(new RiderPassive(this));
             skillTable.Add(new RiderUlt(this));
         }
     }
