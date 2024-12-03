@@ -117,7 +117,7 @@ namespace ChessDLC {
             if (merit >= meritNeeded[level]) {
                 merit -= meritNeeded[level];
                 level++;
-                health += maxHpDiffLv[level - 1] - maxHpDiffLv[level];
+                health += maxHpDiffLv[level] - maxHpDiffLv[level - 1];
                 maxHealth = maxHpDiffLv[level];
                 Console.WriteLine($"{name} 已經晉升至 LV.{level}");
                 Console.WriteLine($"晉升成為 {Getname()}");
