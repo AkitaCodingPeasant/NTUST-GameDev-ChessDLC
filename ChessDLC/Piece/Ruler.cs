@@ -86,15 +86,23 @@ namespace ChessDLC {
     }
 
     public class RulerUlt : Skill {
-        public RulerUlt(Piece skillCaster) : base(skillCaster, 7) {
-            name = "";
+        public RulerUlt(Piece skillCaster) : base(skillCaster, 3) {
+            name = "聖劍出鞘";
             skillType = SkillType.Active;
-            cooldown = 0;
-            positionsNeeded = 0;
+            cooldown = 99;
+            positionsNeeded = 1;
+            describe = $"對距離 {damage} 格內全體敵人造成當前生命值 50% 傷害";
         }
         public override void FindValidPosition() {
+            ManhattanPathFinder(3, TargetType.Everything, true);
         }
         public override void Execute() {
+            targetPositions.Clear();
+            targetPositions = Pathfinder.ManhattanPathFinder(skillCaster.position.x, skillCaster.position.y, damage, TargetType.Enemy, skillCaster.faction, true);
+            for (int i = 0; i < targetPositions.Count; i++) {
+                Piece enemyPiece = ChessBoard.GetRect(targetPositions[i]).piece;
+                skillCaster.Attack(enemyPiece, enemyPiece.health / 2);
+            }
         }
     }
 
