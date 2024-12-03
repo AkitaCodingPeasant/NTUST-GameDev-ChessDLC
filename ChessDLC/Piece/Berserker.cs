@@ -79,7 +79,7 @@ namespace ChessDLC {
 
                 Piece targetPiece = ChessBoard.GetRect(pos).piece;
                 if (targetPiece != null && targetPiece.faction != skillCaster.faction) {
-                    skillCaster.statusEffect.AddStatusEffect(EffectType.Silence, damage);
+                    targetPiece.statusEffect.AddStatusEffect(EffectType.Silence, damage);
                 }
             }
         }
