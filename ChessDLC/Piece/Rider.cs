@@ -57,7 +57,7 @@ namespace ChessDLC {
         public RiderSkill(Piece skillCaster) : base(skillCaster, 8) {
             name = "衝鋒";
             skillType = SkillType.Active;
-            cooldown = 3;
+            cooldown = 4;
             positionsNeeded = 1;
             describe = $"將八方位 2~3 格的敵方單體設為目標\n" +
                 $"往目標方向移動至目標前 1 格\n" +
@@ -124,7 +124,7 @@ namespace ChessDLC {
     }
 
     public class RiderUlt : Skill {
-        public RiderUlt(Piece skillCaster) : base(skillCaster, 10) {
+        public RiderUlt(Piece skillCaster) : base(skillCaster, 6) {
             name = "縱橫沙場";
             skillType = SkillType.Active;
             cooldown = 7;
@@ -166,7 +166,7 @@ namespace ChessDLC {
 
     public class Rider : Piece {
         public override void GetKill(Piece target) {
-            skillTable[3].Execute();
+            skillTable[2].Execute();
         }
         public Rider(Faction faction, int level) : base(faction, Role.Rider, level, "🐴") {
             nameOfDiffLv = new string[3] { "騎兵", "先鋒", "金甲驕雄" };
@@ -183,8 +183,8 @@ namespace ChessDLC {
             meritNeeded.Add(25);
             skillTable.Add(new RiderMovement(this));
             skillTable.Add(new RiderNormalAttack(this));
-            skillTable.Add(new RiderSkill(this));
             skillTable.Add(new RiderPassive(this));
+            skillTable.Add(new RiderSkill(this));
             skillTable.Add(new RiderUlt(this));
         }
     }
