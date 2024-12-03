@@ -40,6 +40,9 @@ namespace ChessDLC {
                         target.Add((x, y));
                     }
                 }
+                if (targetType == TargetType.Everything) {
+                    target.Add((x, y));
+                }
                 if (targetType == TargetType.BlankRect && ChessBoard.GetRect(x, y).Moveable())
                     target.Add((x, y));
 

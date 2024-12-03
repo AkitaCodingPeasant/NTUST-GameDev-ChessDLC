@@ -35,5 +35,6 @@ namespace ChessDLC {
         Pieces,
         Enemy,
         Ally,
+        Everything,
     }
 }
