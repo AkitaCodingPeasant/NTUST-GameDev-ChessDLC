@@ -17,7 +17,7 @@ ChessDLC 是一款用 C# 開發的西洋棋擴展遊戲。
 ### 安裝步驟
 1. **Clone 專案：**
    ```bash
-   git clone https://github.com/yourusername/ChessDLC.git
+   https://github.com/AkitaCodingPeasant/NTUST-GameDev-ChessDLC.git
    ```
 2. **開啟專案：** 使用 Visual Studio 開啟專案資料夾。
 3. **執行遊戲：** 在 Visual Studio 中編譯並執行即可開始遊戲。
